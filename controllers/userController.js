@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongoose').Types;
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 
 
@@ -60,7 +60,7 @@ module.exports = {
         res.status(404).json({ message: 'No user with that ID' });
       }
 
-      //   await thoughts.deleteMany({ _id: { $in: user.thoughts } });
+        await Thought.deleteMany({ _id: { $in: user.thoughts } });
       res.json({ message: 'User and thoughts deleted!' });
     } catch (err) {
       res.status(500).json(err);
@@ -71,7 +71,7 @@ module.exports = {
     console.log(req.body); 
     
     try {
-      const friend = await User.findOne({ _id: req.params.userId });
+      const friend = await User.findOne(req.body);
       if (!friend) {
         res.status(404).json({ message: 'No friend with that ID' });
       }
